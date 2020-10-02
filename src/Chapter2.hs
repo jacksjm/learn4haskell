@@ -338,7 +338,7 @@ ghci> :l src/Chapter2.hs
 subList :: Int -> Int -> [a] -> [a]
 subList from to list
   | from < 0 || to < 0 || to < from = []
-  | otherwise = drop from(take (to + 1) list)
+  | otherwise = drop from (take (to + 1) list)
 
 {- |
 =⚔️= Task 4
@@ -630,6 +630,13 @@ takeEven [] = []
 takeEven [x] = [x]
 takeEven (x : _ : xs) = x : takeEven xs
 
+takeEvenGo :: [Int] -> [Int]
+takeEvenGo xs = go xs 
+  where 
+    go [] = []
+    go (x:xs) 
+      | x `mod` 2 == 1 = x : go xs
+      | otherwise = go xs
 {- |
 =🛡= Higher-order functions
 
@@ -735,7 +742,7 @@ value of the element itself
 🕯 HINT: Use combination of 'map' and 'replicate'
 -}
 smartReplicate :: [Int] -> [Int]
-smartReplicate l = concat (map (\x -> replicate x x) l)
+smartReplicate = concatMap (\x -> replicate x x)
 
 {- |
 =⚔️= Task 9
@@ -789,13 +796,15 @@ Let's now try to eta-reduce some of the functions and ensure that we
 mastered the skill of eta-reducing.
 -}
 divideTenBy :: Int -> Int
-divideTenBy x = div 10 x 
+divideTenBy = div 10
 
 -- TODO: type ;)
-listElementsLessThan x l = filter (< x) l
+listElementsLessThan :: Int -> [Int] -> [Int]
+listElementsLessThan x = filter (< x)
 
 -- Can you eta-reduce this one???
-pairMul xs ys = zipWith (*) xs ys
+pairMul :: [Int] -> [Int] -> [Int]
+pairMul = zipWith (*)
 
 {- |
 =🛡= Lazy evaluation
