@@ -631,12 +631,12 @@ takeEven [x] = [x]
 takeEven (x : _ : xs) = x : takeEven xs
 
 takeEvenGo :: [Int] -> [Int]
-takeEvenGo xs = go xs 
+takeEvenGo xs = go 0 xs 
   where 
-    go [] = []
-    go (x:xs) 
-      | x `mod` 2 == 1 = x : go xs
-      | otherwise = go xs
+    go acc [] = []
+    go acc (x:xs) 
+      | even acc = x : go (acc +1) xs
+      | otherwise = go (acc +1) xs
 {- |
 =🛡= Higher-order functions
 
