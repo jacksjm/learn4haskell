@@ -503,7 +503,7 @@ branches because it is an expression and it must always return some value.
   satisfying the check will be returned and, therefore, evaluated.
 -}
 closestToZero :: Int -> Int -> Int
-closestToZero x y = if abs x == min (abs x) (abs y) then x else y
+closestToZero x y = if abs x < abs y then x else y
 
 
 {- |
@@ -624,8 +624,8 @@ specifying complex expressions.
 sumLast2 :: Int -> Int
 sumLast2 n = 
   let absValue = abs n
-      units = mod absValue 10
-      dozen = mod (div (absValue - units) 10) 10
+      units = lastDigit absValue
+      dozen = lastDigit (div (absValue - units) 10)
   in units + dozen
 
 
@@ -648,8 +648,9 @@ aren't ready for this boss yet!
 -}
 firstDigit :: Int -> Int
 firstDigit n
-  | div n 10 == 0 = n
-  | otherwise = firstDigit (div (n - mod n 10) 10)
+    | div (abs n) 10 == 0 = abs n
+    | otherwise = firstDigit (div (abs n - mod (abs n) 10) 10)
+  
 
 
 {-
