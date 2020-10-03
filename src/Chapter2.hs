@@ -882,12 +882,7 @@ and reverses it.
   cheating!
 -}
 rewind :: [a] -> [a]
-rewind = go []
-  where
-    go :: [a] -> [a] -> [a]
-    go res [] = res
-    go res xs = foldl (flip (:)) res xs
-
+rewind = foldl (flip (:)) []
 
 {-
 You did it! Now it is time to the open pull request with your changes
